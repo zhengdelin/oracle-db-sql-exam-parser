@@ -10,7 +10,7 @@ pip install aspose-cells-python
 pip install --upgrade pymupdf
 ```
 
-### 3. <span style="color:red">some *blue* 請確保該pdf檔以及main.py在同一個文件夾底下</span>
+### 3. <span style="color:red">請確保該pdf檔以及main.py在同一個文件夾底下</span>
 
 ### 4. 運行main.py，以下為運行結果
 
