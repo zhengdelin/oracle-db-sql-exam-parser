@@ -1,7 +1,7 @@
 from module.constants import ALP, Keyword
 import re
 from module.pdf import readPDFToTXTTexts
-from module.output import toOutputDir, OUTPUT_DIR
+from module.output import toOutputDir, toRootDir, OUTPUT_DIR
 
 
 def getChoiceTypeRegex(type: str): return rf"{type}\.(\t|\s)?"
@@ -24,7 +24,9 @@ KEYWORDS_TO_REPLACE = [
     KeywordReplacer(Keyword.image, True),
 ] + [KeywordReplacer(getChoiceTypeRegex(i)) for i in ALP]
 
-KEYWORDS_TO_DELETE = ["https://www.gratisexam.com/"]
+toRootDir()
+keywordsToDeleteFile = open("keywords/to-delete.txt")
+KEYWORDS_TO_DELETE = keywordsToDeleteFile.read().split("\n")
 
 
 __KEYWORDS_PRE_HANDLED_FILE_NAME = "keywords-pre-handled.txt"
