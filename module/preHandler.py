@@ -4,7 +4,7 @@ from module.pdf import readPDFToTXTTexts
 from module.output import toOutputDir, toRootDir, OUTPUT_DIR
 
 
-def getChoiceTypeRegex(type: str): return rf"{type}\.(\t|\s)?"
+def getChoiceTypeRegex(type: str): return rf"(?=(\n|\b)){type}\.(\t|\s)?"
 
 
 class KeywordReplacer:
