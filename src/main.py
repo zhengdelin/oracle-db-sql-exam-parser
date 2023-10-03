@@ -6,10 +6,28 @@ from module.preHandler import handleRawTXTKeywords
 from module.constants import Keyword
 from module.pdf import parsePDFImagesThenToTXT
 from module.output import toRootDir, toOutputDir, clearOutputDir
-fileName = input(
-    "請輸入檔名，必須為pdf檔(預設為exam.pdf):") or "exam.pdf"
 
-if (not fileName.endswith(".pdf")):
+
+def isPDFFile(name: str):
+    return name.endswith(".pdf")
+
+
+def findPDFFile():
+    print("開始搜尋pdf檔案...")
+    toRootDir()
+    files = os.listdir()
+    for f in files:
+        if (isPDFFile(f)):
+            return f
+    return None
+
+
+_pdfFileName = findPDFFile()
+
+fileName = input(
+    f"目前使用{_pdfFileName}，輸入檔名以選擇其他檔案(PDF):" if (_pdfFileName != None) else "輸入檔名：") or _pdfFileName
+
+if (not isPDFFile(fileName)):
     print("檔案必須為pdf檔")
     quit()
 
