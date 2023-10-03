@@ -25,7 +25,7 @@ def findPDFFile():
 _pdfFileName = findPDFFile()
 
 fileName = input(
-    f"目前使用{_pdfFileName}，輸入檔名以選擇其他檔案(PDF):" if (_pdfFileName != None) else "輸入檔名：") or _pdfFileName
+    f"目前使用{_pdfFileName}，輸入檔名以選擇其他檔案(PDF):" if (_pdfFileName != None) else "未搜尋到PDF檔，請輸入檔名：") or _pdfFileName
 
 if (not isPDFFile(fileName)):
     print("檔案必須為pdf檔")
