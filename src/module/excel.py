@@ -69,4 +69,4 @@ def exportToExcel(results: list):
     # newWb = openpyxl.Workbook()
     # newWb.copy_worksheet(sheet)
     # newWb.save("outputs/output.xls")
-    zipOutputs()
+    # zipOutputs()
