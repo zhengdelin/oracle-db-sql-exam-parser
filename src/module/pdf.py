@@ -1,3 +1,4 @@
+import os
 import fitz_new as fitz
 from module.output import toOutputDir, OUTPUT_DIR, toRootDir
 
@@ -85,10 +86,10 @@ def parsePDFImagesThenToTXT(filename: str, imgPrefix=""):
                 texts += "\n"
         txtFile.write(texts)
     print(
-        f"\npdf圖片解析完成，應解析 {imgCountsShouldHave} 張圖片，共解析 {imgCounts} 張圖片，已存至 {OUTPUT_DIR}\{imgPrefix}**.jpg"
+        f"\npdf圖片解析完成，應解析 {imgCountsShouldHave} 張圖片，共解析 {imgCounts} 張圖片，已存至 {os.path.join(OUTPUT_DIR, f'{imgPrefix}**.jpg')}"
     )
     txtFile.close()
-    print(f"\npdf轉換完成，已存至 {OUTPUT_DIR}\{__PDF_TO_TXT_FILE_NAME}")
+    print(f"\npdf轉換完成，已存至 {os.path.join(OUTPUT_DIR, __PDF_TO_TXT_FILE_NAME)}")
 
 
 def readPDFToTXTTexts():

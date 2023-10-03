@@ -112,10 +112,10 @@ def clearConsole(): os.system("cls")
 while (True):
     try:
         inp = input("""-----------------------------
-Input numbers to print the parsed result of the questions(split by comma(,)).
-Or press enter to print next question.
-Or input e to export to Excel.
-Or input q to quit.
+輸入數字以印出分析結果(以逗點(,)隔開)
+按下Enter以印出下一題
+輸入e以輸出至Excel並壓縮成zip檔
+輸入q離開
 input:""")
         if (inp == "q" or inp == "Q"):
             break

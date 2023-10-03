@@ -5,7 +5,7 @@ from openpyxl.worksheet.dimensions import RowDimension
 import util.array as array
 from module.output import toOutputDir, toRootDir, OUTPUT_DIR
 import aspose.cells as asposeCells
-
+from module.zip import zipOutputs
 __EXCEL_XLS_FILE_NAME = "output.xls"
 __EXCEL_XLSX_FILE_NAME = __EXCEL_XLS_FILE_NAME + "x"
 
@@ -64,7 +64,9 @@ def exportToExcel(results: list):
     # workbook.LoadFromFile(__EXCEL_XLSX_FILE_NAME)
     # workbook.SaveToFile("to.xls")
     # workbook.Dispose()
-    print(f"\n成功導出至Excel，已存至 {OUTPUT_DIR}\{__EXCEL_XLSX_FILE_NAME}")
+    print(
+        f"\n成功導出至Excel，已存至 {os.path.join(OUTPUT_DIR, __EXCEL_XLSX_FILE_NAME)}")
     # newWb = openpyxl.Workbook()
     # newWb.copy_worksheet(sheet)
     # newWb.save("outputs/output.xls")
+    zipOutputs()

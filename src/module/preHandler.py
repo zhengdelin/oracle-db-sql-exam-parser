@@ -1,3 +1,4 @@
+import os
 from module.constants import ALP, Keyword
 import re
 from module.pdf import readPDFToTXTTexts
@@ -46,6 +47,7 @@ def handleRawTXTKeywords():
     f.write(texts)
     f.close()
 
-    print(f"\n關鍵字替換完成，已存至 {OUTPUT_DIR}\{__KEYWORDS_PRE_HANDLED_FILE_NAME}")
+    print(
+        f"\n關鍵字替換完成，已存至 {os.path.join(OUTPUT_DIR, __KEYWORDS_PRE_HANDLED_FILE_NAME)}")
 
     return texts
