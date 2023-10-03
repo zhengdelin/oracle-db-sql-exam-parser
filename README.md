@@ -10,6 +10,6 @@
 
 ![Alt text](image-1.png)
 
-### 4. 輸入e導出為excel
+### 4. 輸入e導出為excel並打包成zip
 ### 5. 輸入q或Ctrl+c離開
-### 6. 進入outputs，全選並打包成zip，上tronClass匯入
+### 6. 上tronClass匯入
