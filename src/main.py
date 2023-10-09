@@ -24,13 +24,6 @@ def findPDFFile():
     return None
 
 
-def clearOutputDir():
-    toOutputDir()
-    isDeleted = deleteFilesInDir(OUTPUT_DIR)
-    if (isDeleted):
-        print(f"成功清除 {OUTPUT_DIR} 內所有檔案")
-
-
 # 步驟1: 輸入檔名及圖片前綴
 _pdfFileName = findPDFFile()
 fileName = input(
@@ -40,11 +33,14 @@ if (not isPDFFile(fileName)):
     quit()
 imgPrefix = input("請輸入圖片前綴(如:1Z0071-6-):")
 
+toOutputDir()
 if (not isDirEmpty(OUTPUT_DIR)):
     print()
     toClear = input(f"{OUTPUT_DIR}並非空資料夾，是否清空該資料夾(Y/N，按下Enter表示清空):")
     if (toClear == "" or toClear == "Y" or toClear == "y"):
-        clearOutputDir()
+        isDeleted = deleteFilesInDir(OUTPUT_DIR)
+        if (isDeleted):
+            print(f"成功清除 {OUTPUT_DIR} 內所有檔案")
 
 # 步驟2: 將pdf轉為txt，並解析圖片
 try:
