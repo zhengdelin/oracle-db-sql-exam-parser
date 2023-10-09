@@ -5,6 +5,11 @@ def mkdirIfNotExists(path):
     os.mkdir(path) if not os.path.exists(path) else None
 
 
+def isDirEmpty(dirPath):
+    files = os.listdir(dirPath)
+    return len(files) == 0
+
+
 def deleteFilesInDir(dirPath, recursive=True):
     try:
         files = os.listdir(dirPath)

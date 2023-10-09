@@ -6,7 +6,7 @@ from module.preHandler import handleRawTXTKeywords
 from module.constants import Keyword
 from module.pdf import parsePDFImagesThenToTXT, PDF_TO_TXT_FILE_PATH
 from module.output import toRootDir, toOutputDir, OUTPUT_DIR
-from util.os import deleteFilesInDir
+from util.os import deleteFilesInDir, isDirEmpty
 
 
 def isPDFFile(name: str):
@@ -28,7 +28,6 @@ def clearOutputDir():
     toOutputDir()
     isDeleted = deleteFilesInDir(OUTPUT_DIR)
     if (isDeleted):
-        print()
         print(f"成功清除 {OUTPUT_DIR} 內所有檔案")
 
 
@@ -41,9 +40,15 @@ if (not isPDFFile(fileName)):
     quit()
 imgPrefix = input("請輸入圖片前綴(如:1Z0071-6-):")
 
+if (not isDirEmpty(OUTPUT_DIR)):
+    print()
+    toClear = input(f"{OUTPUT_DIR}並非空資料夾，是否清空該資料夾(Y/N，按下Enter表示清空):")
+    if (toClear == "" or toClear == "Y" or toClear == "y"):
+        clearOutputDir()
+
 # 步驟2: 將pdf轉為txt，並解析圖片
 try:
-    clearOutputDir()
+
     parsePDFImagesThenToTXT(fileName, imgPrefix)
 except Exception as e:
     print(e)

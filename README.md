@@ -4,11 +4,11 @@
 
 ### 2. 運行main.exe，依照指示操作，操作完畢後請檢查圖片
 
-![Alt text](image-4.png)
+![Alt text](image.png)
 
 ### 3. 檢查圖片完畢後，按下Enter繼續操作
 
-![Alt text](image-5.png)
+![Alt text](image-1.png)
 
 ### 3. 可於cmd中查看分析結果，如：
 
