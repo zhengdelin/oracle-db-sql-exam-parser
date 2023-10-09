@@ -24,25 +24,31 @@ def getMaxImageSize(doc: fitz.open):
             # print(w, h)
 
             imgCounts += 1
-    print(f"\n掃描到 {imgCounts} 張圖片")
     return (maxImgWidth, maxImgHeight, imgCounts)
 
 
 __PDF_TO_TXT_FILE_NAME = "parse-image-output-to-txt.txt"
-
+PDF_TO_TXT_FILE_PATH = os.path.join(OUTPUT_DIR, __PDF_TO_TXT_FILE_NAME)
 
 # 由於直接讀取圖片寫入text會導致圖層不同，轉換出來的文字位置會跑掉
+
+
 def parsePDFImagesThenToTXT(filename: str, imgPrefix=""):
     toRootDir()
     doc = fitz.open(filename)
     toOutputDir()
     txtFile = open(__PDF_TO_TXT_FILE_NAME, "w", encoding="utf-8")
 
+    print()
+    print("開始掃描PDF圖片")
     (maxImgWidth, maxImgHeight, imgCountsShouldHave) = getMaxImageSize(doc)
+    print(f"掃描到 {imgCountsShouldHave} 張圖片")
 
+    print()
+    print("開始解析PDF")
     imgCounts = 0
     for page in doc:
-        # pageWidth, pageHeight = page.rect.x1, page.rect.y1
+        pageWidth, pageHeight = page.rect.x1, page.rect.y1
         # print(pageWidth, pageHeight)
 
         # pageNum = page.number
@@ -53,8 +59,11 @@ def parsePDFImagesThenToTXT(filename: str, imgPrefix=""):
         # get_images取得的座標，座標中心點在左上，往右表示x座標遞增，往下表示y座標遞增
         # 而get_text時，pdf座標中心在右上角，往左表示y座標遞增，往下表示x座標遞增
         # 因此之前測到的高度要當作寬度使用，寬度當作高度使用(相當於翻轉90度)
-        clipRect = (maxImgHeight * -1 - 50, maxImgWidth * -
-                    1 - 50, maxImgHeight + 50, maxImgWidth + 50)
+        clipRectX = max(pageHeight, maxImgHeight)
+        clipRectY = max(pageWidth, maxImgWidth)
+        OFFSET = 200
+        clipRect = (clipRectX * -1 - OFFSET, clipRectY * -
+                    1 - OFFSET, clipRectX + OFFSET, clipRectY + OFFSET)
 
         pageDict = page.get_text("dict", clip=clipRect)
 
@@ -62,6 +71,8 @@ def parsePDFImagesThenToTXT(filename: str, imgPrefix=""):
         for block in pageDict["blocks"]:
             blockType = block["type"]
             isImageBlock = blockType == 1
+            # print(block if not isImageBlock else f"img block{imgCounts+1}")
+            curBlockTexts = ""
             if (isImageBlock):
                 # print(block["bbox"])
                 imgData, w, h, bpc = block["image"], block["width"], block["height"], block["bpc"]
@@ -75,21 +86,23 @@ def parsePDFImagesThenToTXT(filename: str, imgPrefix=""):
                 img.close()
                 imgCounts += 1
 
-                texts += f"@@{imgName}@@\n"
+                curBlockTexts = f"@@{imgName}@@\n"
             else:
                 for line in block["lines"]:
                     # print("---line---")
                     for span in line["spans"]:
-                        texts += span["text"] + " "
+                        curBlockTexts += span["text"] + " "
                         # print(span["text"])
-                    texts += "\n"
-                texts += "\n"
+                    curBlockTexts += "\n"
+                curBlockTexts += "\n"
+            # print(curBlockTexts)
+            texts += curBlockTexts
         txtFile.write(texts)
     print(
-        f"\npdf圖片解析完成，應解析 {imgCountsShouldHave} 張圖片，共解析 {imgCounts} 張圖片，已存至 {os.path.join(OUTPUT_DIR, f'{imgPrefix}**.jpg')}"
+        f"PDF圖片解析完成，應解析 {imgCountsShouldHave} 張圖片，共解析 {imgCounts} 張圖片，已存至 {os.path.join(OUTPUT_DIR, f'{imgPrefix}**.jpg')}"
     )
     txtFile.close()
-    print(f"\npdf轉換完成，已存至 {os.path.join(OUTPUT_DIR, __PDF_TO_TXT_FILE_NAME)}")
+    print(f"PDF轉換完成，已存至 {PDF_TO_TXT_FILE_PATH}")
 
 
 def readPDFToTXTTexts():

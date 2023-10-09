@@ -14,6 +14,7 @@ def deleteFilesInDir(dirPath, recursive=True):
                 os.remove(filePath)
             elif recursive and os.path.isdir(filePath):
                 deleteFilesInDir(dirPath, True)
-        print("All files deleted successfully.")
-    except OSError:
-        print("Error occurred while deleting files.")
+        return True
+    except OSError as e:
+        print("刪除檔案時發生錯誤：", e)
+        return False

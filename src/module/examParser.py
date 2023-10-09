@@ -43,8 +43,10 @@ def getSubject(arr: list):
 def parseAns(arr: list):
     ansIndex = array.findIndex(
         arr, lambda x: x.startswith(Keyword.correctAnswer))
-    ans = ",".join(arr[ansIndex].replace(Keyword.correctAnswer,  "").replace(
-        "Section: (none) Explanation", "").strip())
+    _ans = arr[ansIndex].replace(Keyword.correctAnswer,  "").replace(
+        "Section: (none) Explanation", "")
+    ansFiltered = filter(lambda c: c.isalpha(), _ans)
+    ans = ",".join(ansFiltered)
     # print(ans)
     ansType = "單選題" if len(ans) == 1 else "複選題"
     explanationIndex = array.findIndex(

@@ -11,6 +11,9 @@ __EXCEL_XLSX_FILE_NAME = __EXCEL_XLS_FILE_NAME + "x"
 
 
 def exportToExcel(results: list):
+    print()
+    print("開始將題目導出至Excel")
+
     toRootDir()
     # excel設置
     SHEET_START_ROW = 3
@@ -65,7 +68,7 @@ def exportToExcel(results: list):
     # workbook.SaveToFile("to.xls")
     # workbook.Dispose()
     print(
-        f"\n成功導出至Excel，已存至 {os.path.join(OUTPUT_DIR, __EXCEL_XLSX_FILE_NAME)}")
+        f"成功導出至Excel，已存至 {os.path.join(OUTPUT_DIR, __EXCEL_XLS_FILE_NAME)}")
     # newWb = openpyxl.Workbook()
     # newWb.copy_worksheet(sheet)
     # newWb.save("outputs/output.xls")
